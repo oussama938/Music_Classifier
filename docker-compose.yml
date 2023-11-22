@@ -25,8 +25,7 @@ services:
     ports:
       - "56741:80"
     volumes:
-      - ./front_service:/app    
-      
+      - ./front_service:/app
 
 test:
   build:
@@ -37,6 +36,7 @@ test:
     - vgg19_service
     - front_service
   command: ["pytest", "tests/"]
+
       
 
 
