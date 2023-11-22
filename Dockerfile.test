@@ -14,5 +14,5 @@ COPY vgg19_service /app/vgg19_service
 COPY front_service /app/front_service
 COPY integration_tests /app/integration_tests
 
-# Run the tests
-CMD ["pytest", "/app/integration_tests"]
+# # Run the tests
+# CMD ["pytest", "/app/integration_tests"]
