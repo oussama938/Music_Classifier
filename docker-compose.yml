@@ -28,15 +28,15 @@ services:
       - ./front_service:/app    
       
 
-    test:
-      build:
-        context: .
-        dockerfile: Dockerfile.test
-      depends_on:
+test:
+  build:
+    context: .
+    dockerfile: Dockerfile.test
+  depends_on:
         - svm_service
         - vgg19_service
         - front_service
-      command: ["pytest", "tests/"]    
+  command: ["pytest", "tests/"]    
       
 
 
