@@ -12,8 +12,8 @@ pipeline{
             // sh 'cd vgg19_service && pytest tests/test_vgg19_service.py'
             // sh 'cd front_service && pytest tests/test/front_service.py'
             // sh 'ls'
-            sh 'docker-compose build'
-            sh 'docker-compose test'
+            // sh 'docker-compose build'
+            sh 'docker-compose test_runner'
          }
       }
 
