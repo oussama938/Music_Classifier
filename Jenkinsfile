@@ -13,7 +13,7 @@ pipeline{
             // sh 'cd front_service && pytest tests/test/front_service.py'
             // sh 'ls'
             // sh 'docker-compose build'
-            sh 'docker-compose test_runner'
+            sh 'docker-compose run test_runner'
          }
       }
 
