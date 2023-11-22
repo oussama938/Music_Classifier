@@ -24,6 +24,7 @@ pipeline{
       stage('Building & Running Containers'){
          steps{
             sh '''
+            sh -c "pytest svm_service/tests/ vgg19_service/tests/ front_service/tests/
             docker-compose up
             '''
          }
