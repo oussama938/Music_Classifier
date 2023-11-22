@@ -13,35 +13,31 @@ import io
 
 app = Flask(__name__,static_url_path='/static')
 
-# app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Adjust as needed
-# app.config['UPLOAD_FOLDER'] = '../upload'
-# file_name = 'SVM_classifier_cross_validation_last.pkl'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Adjust as needed
+app.config['UPLOAD_FOLDER'] = '../upload'
+file_name = 'Vgg19Keras.pkl'
 
-# # Get the current working directory
-# current_directory = os.path.dirname(os.path.abspath(__file__))
-# # Create the full file path
-# file_path = os.path.join(current_directory, file_name)
-# # Load the content of the file using joblib
-# model = joblib.load(file_path)
+# Get the current working directory
+current_directory = os.path.dirname(os.path.abspath(__file__))
+# Create the full file path
+file_path = os.path.join(current_directory, file_name)
+# Load the content of the file using joblib
+model = joblib.load(file_path)
 
-# # Create the full file path
-# file_path = os.path.join(current_directory, 'standard_scaler.pkl')
-# # Load the content of the file using joblib
-# scaler = joblib.load(file_path)
+# Create the full file path
+file_path = os.path.join(current_directory, 'standard_scaler.pkl')
+# Load the content of the file using joblib
+scaler = joblib.load(file_path)
 
 @app.route('/vgg', methods=['POST'])
 def svm():
      if request.method == 'POST':
-          # # Handle POST request data here
-          # request_data = request.get_json()
-          # print(request.get_json())
-          # # Convert data samples and labels to numpy arrays
-          # data_samples = np.array(request_data)
-          # # Normalize the features
-          # data_samples_normalized = scaler.transform(data_samples)
-          # prediction=model.predict(data_samples_normalized)
-          # return jsonify("Your music file type is "+prediction[0])
-          return 0
+          request_data = request.get_json()
+          print(request.get_json())
+          data_samples = np.array(request_data)
+          data_samples_normalized = scaler.transform(data_samples)
+          prediction=model.predict(data_samples_normalized)
+          return jsonify("Your music file type is "+prediction[0])
                
 if __name__ == '__main__':
-     app.run(debug=True)
+          app.run(debug=True)
