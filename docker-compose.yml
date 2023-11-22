@@ -27,17 +27,16 @@ services:
     volumes:
       - ./front_service:/app
 
-test:
+test_runner:
   build:
     context: .
     dockerfile: Dockerfile.test
-  depends_on:
-    - svm_service
-    - vgg19_service
-    - front_service
-  command: ["pytest", "tests/"]
-
-      
+  volumes:
+    - ./svm_service:/app/svm_service
+    - ./vgg19_service:/app/vgg19_service
+    - ./front_service:/app/front_service
+    - ./docker-compose.yml:/app/docker-compose.yml
+  command: sh -c "pytest svm_service/tests/ vgg19_service/tests/ front_service/tests/"
 
 
   # nginx:
