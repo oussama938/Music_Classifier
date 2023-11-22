@@ -8,9 +8,9 @@ pipeline{
       }
       stage('Unit Tests') {
          steps {
-            // sh 'cd svm_service && pytest tests'
-            // sh 'cd vgg19_service && pytest tests'
-            // sh 'cd front_service && pytest tests'
+            sh 'cd svm_service && pytest tests/test_svm_service.py'
+            sh 'cd vgg19_service && pytest tests/test_vgg19_service.py'
+            sh 'cd front_service && pytest tests/test/front_service.py'
             sh 'ls'
          }
       }
