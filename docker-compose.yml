@@ -36,7 +36,7 @@ services:
         - svm_service
         - vgg19_service
         - front_service
-      command: ["pytest", "/app/tests"]    
+      command: ["pytest", "tests/"]    
       
 
 

@@ -8,11 +8,14 @@ WORKDIR /app
 COPY requirements-test.txt .
 RUN pip install --no-cache-dir -r requirements-test.txt
 
-# Copy the application code and tests
-COPY svm_service /app/svm_service
-COPY vgg19_service /app/vgg19_service
-COPY front_service /app/front_service
-COPY integration_tests /app/integration_tests
+# Install any additional dependencies needed for testing
+RUN pip install pytest
+
+# Copy the application code and test configurations into the container
+COPY . .
+
+# Command to run the tests
+CMD ["pytest", "svm_service/tests/", "vgg19_service/tests/", "front_service/tests/"]
 
 # # Run the tests
 # CMD ["pytest", "/app/integration_tests"]
