@@ -33,10 +33,10 @@ test:
     context: .
     dockerfile: Dockerfile.test
   depends_on:
-        - svm_service
-        - vgg19_service
-        - front_service
-  command: ["pytest", "tests/"]    
+    - svm_service
+    - vgg19_service
+    - front_service
+  command: ["pytest", "tests/"]
       
 
 
