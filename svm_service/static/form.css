@@ -3,8 +3,8 @@ body{
   }
   form{
     position: absolute;
-    top: 50%;
-    left: 51%;
+    top: 51%;
+    left: 49%;
     margin-top: -100px;
     margin-left: -250px;
     width: 500px;
