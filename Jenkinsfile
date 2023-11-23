@@ -6,13 +6,17 @@ pipeline{
             checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/oussama938/Music_Classifier']])
          }
       }
+      stage('install req'){
+         steps{
+            sh 'sudo apt install -y python3.9 python3-pip'
+         }
+      }
       stage('Unit Tests') {
          steps {
-            sh 'python --version'
-            sh 'ls'
-            sh 'pwd'
-            sh 'ls svm_service'
-            sh 'docker-compose up'
+            // sh 'ls'
+            // sh 'pwd'
+            // sh 'ls svm_service'
+            // sh 'docker-compose up'
             sh 'python -m pip install pytest'
             sh 'cd svm_service && pytest tests/'
             sh 'cd vgg19_service && pytest tests/'
