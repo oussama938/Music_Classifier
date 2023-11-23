@@ -13,7 +13,7 @@ pipeline{
             sh 'pwd'
             sh 'ls svm_service'
             sh 'docker-compose up'
-            sh 'pip install pytest'
+            sh 'python -m pip install pytest'
             sh 'cd svm_service && pytest tests/'
             sh 'cd vgg19_service && pytest tests/'
             sh 'cd front_service && pytest tests/'
