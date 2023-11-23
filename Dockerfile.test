@@ -15,7 +15,7 @@ RUN pip install pytest
 COPY . .
 
 # Command to run the tests
-# CMD ["pytest", "svm_service/tests/", "vgg19_service/tests/", "front_service/tests/"]
+CMD ["pytest", "svm_service/tests/", "vgg19_service/tests/", "front_service/tests/"]
 
 # # Run the tests
 # CMD ["pytest", "/app/integration_tests"]
