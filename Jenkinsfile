@@ -8,11 +8,18 @@ pipeline{
       }
       stage('install req'){
          steps{
-            sh 'sudo apt install -y python3.9 python3-pip'
+            // sh 'sudo apt install -y python3.9 python3-pip'
          }
       }
       stage('Unit Tests') {
          steps {
+                            // Build Docker images for your services
+            sh 'docker-compose -f docker-compose.yml build'
+
+            // Run unit tests for each service
+            sh 'docker-compose -f docker-compose.yml run --rm svm_service pytest tests/'
+            sh 'docker-compose -f docker-compose.yml run --rm vgg19_service pytest tests/'
+            sh 'docker-compose -f docker-compose.yml run --rm front_service pytest tests/'
             // sh 'ls'
             // sh 'pwd'
             // sh 'ls svm_service'
