@@ -26,16 +26,19 @@ services:
       - "56741:80"
     volumes:
       - ./front_service:/app
+      
 
-  test_runner:
-    build:
-      context: .
-      dockerfile: Dockerfile.test
-    depends_on:
-      - svm_service
-      - vgg19_service
-      - front_service
-    command: sh -c "pytest svm_service/tests/ vgg19_service/tests/ front_service/tests/"
+  # unit_tests:
+  #   build:
+  #     context: ./unit_tests
+  #     dockerfile: ./Dockerfile
+  #   volumes:
+  #     - ./unit_tests:/app
+  #   depends_on:
+  #     - svm_service
+  #     - vgg19_service
+  #     - front_service
+  #   command: sh -c "pytest svm_service/tests/ vgg19_service/tests/ front_service/tests/"
 
 
   # nginx:
