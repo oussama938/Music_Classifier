@@ -8,6 +8,7 @@ pipeline{
       }
       stage('Unit Tests') {
          steps {
+            sh 'python --version'
             sh 'ls'
             sh 'pwd'
             sh 'ls svm_service'
