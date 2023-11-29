@@ -31,7 +31,6 @@ pipeline{
                   echo "Running tests for $service"
                   def testCommand = "docker exec svm_service pytest"
 
-                        // Run tests and check the exit code
                   def result = sh script: testCommand, returnStatus: true
                   // if (result != 0) {
                   //    echo "Tests failed for $service, stopping Docker Compose"
