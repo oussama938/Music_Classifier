@@ -11,6 +11,12 @@ pipeline{
             sh '''
             docker-compose up -d
             '''
+            def servicesCommand = "docker-compose config --services"
+            def services = sh(script: servicesCommand, returnStdout: true).trim().split("\n")
+            def testCommand = "docker exec svm_service pytest"
+            def result = sh script: testCommand, returnStatus: true
+
+            
          }
       }
       stage('Run Tests') {
