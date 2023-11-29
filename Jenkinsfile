@@ -6,11 +6,6 @@ pipeline{
             checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/oussama938/Music_Classifier']])
          }
       }
-      stage('install req'){
-         steps{
-            // sh 'sudo apt install -y python3.9 python3-pip'
-         }
-      }
       stage('Unit Tests') {
          steps {
                             // Build Docker images for your services

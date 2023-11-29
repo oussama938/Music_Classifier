@@ -30,7 +30,7 @@ file_path = os.path.join(current_directory, 'standard_scaler.pkl')
 scaler = joblib.load(file_path)
 
 @app.route('/vgg', methods=['POST'])
-def svm():
+def vgg():
      if request.method == 'POST':
           request_data = request.get_json()
           print(request.get_json())
