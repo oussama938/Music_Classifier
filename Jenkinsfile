@@ -23,7 +23,7 @@ pipeline{
                     // Run pytest for each service
                for (service in services) {
                   echo "Running tests for $service"
-                  def testCommand = "docker-compose run --rm $service pytest $service/unit_tests"
+                  def testCommand = "docker-compose run --rm $service pytest"
 
                         // Run tests and check the exit code
                   def result = sh script: testCommand, returnStatus: true
