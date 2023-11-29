@@ -26,8 +26,20 @@ services:
       - "56741:80"
     volumes:
       - ./front_service:/app
-      
 
+  # test_service:
+  #   build: 
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - "56742:80"      
+  #   depends_on:
+  #     - front_service
+  #     - svm_service
+  #     - vgg19_service  
+  #   command: pytest 
+      
+  
   # unit_tests:
   #   build:
   #     context: ./unit_tests

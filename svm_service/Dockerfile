@@ -12,4 +12,7 @@ ENV STATIC_URL /static
 # Absolute path in where the static files wil be
 ENV STATIC_PATH /app/static
 
+# Run the tests
+CMD ["pytest", "tests"]
+
 
