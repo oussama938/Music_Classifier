@@ -36,13 +36,8 @@ pipeline{
             }
          }
       }
-   }
-   post {
-      always {
-         script {
-      // Clean up Docker Compose services
-         sh 'docker-compose down'
-         }
+      stage('Run Tests') {
+         
       }
-   }  
+   }
 }
