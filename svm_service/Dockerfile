@@ -13,6 +13,7 @@ ENV STATIC_URL /static
 ENV STATIC_PATH /app/static
 
 # Run the tests
-CMD ["pytest", "tests"]
+# CMD ["pytest", "tests"]
+
 
 

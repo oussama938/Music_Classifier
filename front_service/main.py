@@ -62,6 +62,8 @@ def classify_audio():
           audio_data = audio_file.read()
           audio_io = io.BytesIO(audio_data)
           data_samples=extract_features(audio_io,None)
+          print("this is input")
+          print(data_samples)
           selected_value = request.form['model_selected']
           
           if selected_value == "none" :

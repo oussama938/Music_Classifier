@@ -8,6 +8,8 @@ services:
       - "56739:80"
     volumes:
       - ./svm_service:/app
+    command: pytest 
+    # command: tail -f /dev/null
 
   vgg19_service:
     build:
