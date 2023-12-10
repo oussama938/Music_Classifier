@@ -13,25 +13,27 @@ pipeline{
       }
       stage('Testing and Running Containers'){
          steps{
-            sh 'docker-compose up -d'
+            script{
+               sh 'docker-compose up -d'
 
-            def serviceName = 'test_service'
-            def exitCode = sh(script: "docker-compose ps -q ${serviceName} | xargs docker inspect --format='{{.State.ExitCode}}'", returnStatus: true).trim() 
-            echo "Exit code of ${serviceName}: ${exitCode}"
+               def serviceName = 'test_service'
+               def exitCode = sh(script: "docker-compose ps -q ${serviceName} | xargs docker inspect --format='{{.State.ExitCode}}'", returnStatus: true).trim() 
+               echo "Exit code of ${serviceName}: ${exitCode}"
 
-            if(exitCode == 0){
-               echo 'Containers are Working !'
-               sh 'docker-compose down'
-               sh 'docker-compose up'
+               if(exitCode == 0){
+                  echo 'Containers are Working !'
+                  sh 'docker-compose down'
+                  sh 'docker-compose up'
 
+               }
+               else{
+                  echo 'Containers DOWN !'
+                  sh 'docker-compose down'
+
+               }
+               
             }
-            else{
-               echo 'Containers DOWN !'
-               sh 'docker-compose down'
-
-            }
-            
-         }
+         }   
       }
    }
 }
