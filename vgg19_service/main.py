@@ -10,6 +10,10 @@ from sklearn.preprocessing import StandardScaler
 
 import io
 
+# tensorflow==2.14.0
+# Keras==2.7.0
+# Pillow==8.4.0
+
 
 app = Flask(__name__,static_url_path='/static')
 

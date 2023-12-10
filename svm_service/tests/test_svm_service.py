@@ -1,4 +1,4 @@
-from main import app
+from svm_service.main import app
 import pytest
 from flask import Flask, jsonify
 import warnings

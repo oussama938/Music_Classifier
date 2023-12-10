@@ -6,34 +6,31 @@ pipeline{
             checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/oussama938/Music_Classifier']])
          }
       }
-      stage('Building & Running Containers'){
+      stage('Building Containers'){
          steps{
-            sh '''
-            docker-compose up -d
-            docker exec svm_service pytest
-            '''         
+            sh'docker-compose build'
          }
       }
-      stage('Run Tests') {
-         steps {
-            script {
-                    // Identify services dynamically
-               def servicesCommand = "docker-compose config --services"
-               def services = sh(script: servicesCommand, returnStdout: true).trim().split("\n")
+      stage('Testing and Running Containers'){
+         steps{
+            sh 'docker-compose up -d'
 
-                    // Run pytest for each service
-               for (service in services) {
-                  echo "Running tests for $service"
-                  def testCommand = "docker exec svm_service pytest"
+            def serviceName = 'test_service'
+            def exitCode = sh(script: "docker-compose ps -q ${serviceName} | xargs docker inspect --format='{{.State.ExitCode}}'", returnStatus: true).trim() 
+            echo "Exit code of ${serviceName}: ${exitCode}"
 
-                  def result = sh script: testCommand, returnStatus: true
-                  // if (result != 0) {
-                  //    echo "Tests failed for $service, stopping Docker Compose"
-                  //    sh 'docker-compose down'
-                  //    error 'Tests failed, stopping build'
-                  // }
-               }
+            if(exitCode == 0){
+               echo 'Containers are Working !'
+               sh 'docker-compose down'
+               sh 'docker-compose up'
+
             }
+            else{
+               echo 'Containers DOWN !'
+               sh 'docker-compose down'
+
+            }
+            
          }
       }
    }
