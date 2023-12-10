@@ -17,7 +17,7 @@ pipeline{
                sh 'docker-compose up -d'
 
                def serviceName = 'test_service'
-               def exitCode = sh(script: "docker-compose ps -q ${serviceName} | xargs docker inspect --format='{{.State.ExitCode}}'", returnStatus: true).trim() 
+               def exitCode = sh(script: "docker-compose ps -q ${serviceName} | xargs docker inspect --format='{{.State.ExitCode}}'", returnStatus: true)
                echo "Exit code of ${serviceName}: ${exitCode}"
 
                if(exitCode == 0){
