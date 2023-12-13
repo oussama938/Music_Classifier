@@ -24,7 +24,7 @@ pipeline{
                   echo 'Containers are Working !'
                }
                else{
-                  echo 'Containers DOWN ! ! !'
+                  echo 'Containers DOWN ! ! ! '
                   sh 'docker-compose down'
 
                }
