@@ -10,58 +10,20 @@ import librosa
 from sklearn.preprocessing import StandardScaler
 
 import io
+import base64
 
 
 app = Flask(__name__,static_url_path='/static')
-
-def extract_features(audio_file,sampling_rates):
-     x, sr = librosa.load(audio_file,sr=sampling_rates)
-     onset_env = librosa.onset.onset_strength(y=x, sr=sr)
-
-     tempo = librosa.feature.tempo(onset_envelope=onset_env, sr=sr)
-
-
-     features = {
-    "chroma_stft_mean": float(librosa.feature.chroma_stft(y=x, sr=sr).mean()),
-    "chroma_stft_var": float(librosa.feature.chroma_stft(y=x, sr=sr).var()),
-    "rms_mean": float(librosa.feature.rms(y=x).mean()),
-    "rms_var": float(librosa.feature.rms(y=x).var()),
-    "spectral_centroid_mean": float(librosa.feature.spectral_centroid(y=x, sr=sr).mean()),
-    "spectral_centroid_var": float(librosa.feature.spectral_centroid(y=x, sr=sr).var()),
-    "spectral_bandwidth_mean":float( librosa.feature.spectral_bandwidth(y=x, sr=sr).mean()),
-    "spectral_bandwidth_var": float(librosa.feature.spectral_bandwidth(y=x, sr=sr).var()),
-    "rolloff_mean": float(librosa.feature.spectral_rolloff(y=x, sr=sr).mean()),
-    "rolloff_var": float(librosa.feature.spectral_rolloff(y=x, sr=sr).var()),
-    "zero_crossing_rate_mean": float(librosa.feature.zero_crossing_rate(y=x).mean()),
-    "zero_crossing_rate_var": float(librosa.feature.zero_crossing_rate(y=x).var()),
-    "harmony_mean": float(librosa.effects.harmonic(y=x).mean()),
-    "harmony_var": float(librosa.effects.harmonic(y=x).var()),
-    "tempo":float(tempo[0])
-     }
-  # Extract the MFCC features.
-     mfccs = librosa.feature.mfcc(y=x, sr=sr)
-     for i in range(1, 21):
-          features["mfcc{}_mean".format(i)] =float( mfccs[i - 1].mean())
-          features["mfcc{}_var".format(i)] = float(mfccs[i - 1].var())
-
-     print("Feature Values:")
-     for value in features.values():
-         print(value)
-
-
-     return [list(features.values())]
 
 @app.route('/')
 def home():
      return render_template('form.html')
 
-@app.route('/classify', methods=['POST'])
+@app.route('/classifyy', methods=['POST'])
 def classify_audio(): 
      if request.method == 'POST':
           audio_file=request.files['file']
           audio_data = audio_file.read()
-          audio_io = io.BytesIO(audio_data)
-          data_samples=extract_features(audio_io,None)
           print("this is input")
           print(data_samples)
           selected_value = request.form['model_selected']
@@ -77,8 +39,48 @@ def classify_audio():
                svm_response = requests.post("http://vgg19_service:80/vgg",json=data_samples)
                return jsonify(svm_response.text)  
           
-          
+@app.route('/classify', methods=['POST'])
+def classify(): 
+     if request.method == 'POST':
+          audio_file=request.files['file']
+          audio_data = audio_file.read()
+          encoded_audio = base64.b64encode(audio_data).decode('utf-8')
+          payload = {'audio_data': encoded_audio}
 
+          selected_value = request.form['model_selected']
+          
+          if selected_value == "none" :
+               return render_template('form.html')
+
+          if selected_value == "svm" :
+               svm_response = requests.post("http://svm_service:80/svm-base64",json=payload)
+               return jsonify(svm_response.text)  
+
+          if selected_value == "vgg" :
+               # vgg19-base64
+               svm_response = requests.post("http://vgg19_service:80/vgg19-base64",json=payload)
+               return jsonify(svm_response.text)           
+
+     #    try:
+     #        audio_file = request.files['file']
+     #        # Read the contents of the audio file
+     #        audio_data = audio_file.read()
+     #        # Encode the audio data as base64
+            
+
+     #        # Send a POST request to another Flask microservice
+     #        microservice_url = 'http://other_microservice_url'
+     #        payload = {'audio_data': encoded_audio}
+     #        response = requests.post(microservice_url, json=payload)
+
+     #        # Process the response from the other microservice as needed
+     #        result = response.json()
+
+     #        # Return the result as a JSON response
+     #        return jsonify(result)
+
+     #    except Exception as e:
+     #        return jsonify({'error': str(e)})
         
        
 if __name__ == '__main__':

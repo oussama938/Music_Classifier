@@ -22,9 +22,6 @@ pipeline{
 
                if(exitCode == 0){
                   echo 'Containers are Working !'
-                  sh 'docker-compose down'
-                  sh 'docker-compose up'
-
                }
                else{
                   echo 'Containers DOWN !'

@@ -8,8 +8,6 @@ services:
       - "56739:80"
     volumes:
       - ./svm_service:/app
-    # command: pytest 
-    # # command: tail -f /dev/null
 
   vgg19_service:
     build:
@@ -47,26 +45,3 @@ services:
 
       
   
-  # unit_tests:
-  #   build:
-  #     context: ./unit_tests
-  #     dockerfile: ./Dockerfile
-  #   volumes:
-  #     - ./unit_tests:/app
-  #   depends_on:
-  #     - svm_service
-  #     - vgg19_service
-  #     - front_service
-  #   command: sh -c "pytest svm_service/tests/ vgg19_service/tests/ front_service/tests/"
-
-
-  # nginx:
-  #   image: nginx:latest
-  #   ports:
-  #     - "81:81"
-  #   volumes:
-  #     - /var/www/FlaskApplication/nginx/nginx.conf:/etc/nginx/nginx.conf
-  #   depends_on:
-  #     - svm_service
-  #     - vgg19_service    
-
