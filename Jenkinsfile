@@ -6,11 +6,11 @@ pipeline{
             checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/oussama938/Music_Classifier']])
          }
       }
-      // stage('Building Containers'){
-      //    steps{
-      //       sh'docker-compose build'
-      //    }
-      // }
+      stage('Building Containers'){
+         steps{
+            sh'docker-compose build'
+         }
+      }
       stage('Testing and Running Containers'){
          steps{
             script{
